@@ -1,0 +1,588 @@
+name: SALES_360
+tables:
+  - name: CUSTOMERS
+    base_table:
+      database: ENERGY
+      schema: PROD
+      table: CUSTOMERS
+    dimensions:
+      - name: BILLING_CYCLE
+        description: The frequency at which a customer is billed for their services.
+        expr: BILLING_CYCLE
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - Monthly
+          - Quarterly
+      - name: CITY
+        description: The city where the customer is located.
+        expr: CITY
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - West Ronaldview
+          - West Deborah
+          - Lake Juliefurt
+      - name: CREDIT_CARD_NUMBER
+        description: Unique identifier of the customer's credit card.
+        expr: CREDIT_CARD_NUMBER
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - '4111161528098856'
+          - '30487282997967'
+          - '3581618495931032'
+      - name: CUSTOMER_ID
+        description: Unique identifier for each customer in the database.
+        expr: CUSTOMER_ID
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - CUST001159
+          - CUST001236
+          - CUST001002
+      - name: CUSTOMER_TYPE
+        description: The type of customer, categorized as either Commercial (business or organization), Industrial (manufacturing or production-based), or Residential (individual or household).
+        expr: CUSTOMER_TYPE
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - Commercial
+          - Industrial
+          - Residential
+      - name: EMAIL
+        description: The email address of the customer.
+        expr: EMAIL
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - nancymeyer@example.net
+          - maria58@example.net
+          - jessicapayne@example.org
+      - name: FIRST_NAME
+        description: The first name of the customer.
+        expr: FIRST_NAME
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - Michele
+          - Katherine
+          - Reginald
+      - name: LAST_NAME
+        description: The customer's last name.
+        expr: LAST_NAME
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - Robinson
+          - Barton
+          - Mccoy
+      - name: PHONE
+        description: The phone number of the customer.
+        expr: PHONE
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - 922-669-1669
+          - 503-703-2432
+          - (555)434-1928
+      - name: SERVICE_PLAN
+        description: The type of service plan subscribed to by the customer, which determines the level of features and support they receive.
+        expr: SERVICE_PLAN
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - Premium
+          - Basic
+          - Standard
+      - name: SSN
+        description: Unique identifier for each customer, typically a Social Security Number (SSN) in the format XXX-XX-XXXX, used to distinguish and track individual customers.
+        expr: SSN
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - 518-73-1120
+          - 455-49-2025
+          - 232-71-6673
+      - name: STATE
+        description: The two-letter code representing the state or region where the customer is located.
+        expr: STATE
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - RI
+          - AS
+          - FM
+      - name: STREET_ADDRESS
+        description: The physical location of a customer's residence or business, including the street name and number, apartment or suite number, and other relevant details.
+        expr: STREET_ADDRESS
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - 49828 Jonathan Mountain Suite 746
+          - 503 Linda Locks
+          - 431 Joshua River
+      - name: ZIP_CODE
+        description: The ZIP code of the customer's mailing address.
+        expr: ZIP_CODE
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - '43810'
+          - '56203'
+          - '20507'
+    time_dimensions:
+      - name: DATE_OF_BIRTH
+        description: Date of birth of the customer.
+        expr: DATE_OF_BIRTH
+        data_type: DATE
+        sample_values:
+          - '2000-10-08'
+          - '1973-03-01'
+          - '1958-04-24'
+      - name: ENROLLMENT_DATE
+        description: The date on which the customer enrolled or signed up for a service or program.
+        expr: ENROLLMENT_DATE
+        data_type: DATE
+        sample_values:
+          - '2023-09-20'
+          - '2024-09-29'
+          - '2024-02-07'
+    primary_key:
+      columns:
+        - CUSTOMER_ID
+  - name: CUSTOMER_INTERACTIONS
+    description: This table stores information about interactions between customers and representatives, including the type of interaction, reason, duration, resolution, and customer satisfaction score, providing a record of customer service activities and outcomes.
+    base_table:
+      database: SALES
+      schema: PROD
+      table: CUSTOMER_INTERACTIONS
+    dimensions:
+      - name: CUSTOMER_ID
+        description: Unique identifier for the customer who initiated the interaction.
+        expr: CUSTOMER_ID
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - CUST001006
+          - CUST001101
+          - CUST001003
+      - name: INTERACTION_ID
+        description: Unique identifier for each customer interaction.
+        expr: INTERACTION_ID
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - INT50070
+          - INT50116
+          - INT50200
+      - name: INTERACTION_TYPE
+        description: The type of interaction a customer had with the company, such as a sales call, online chat, or support call.
+        expr: INTERACTION_TYPE
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - Sales Call
+          - Chat
+          - Support Call
+      - name: NOTES
+        description: This column stores free-form text notes related to customer interactions, providing additional context and details about the interactions that may not be captured in other fields.
+        expr: NOTES
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - Clearly two part again produce nice far Congress.
+          - Have oil level artist Congress race candidate act.
+          - Project capital recognize will later issue four yourself.
+      - name: REASON
+        description: The reason for the customer's interaction with the company, such as upgrading their plan, inquiring about their bill, or expressing interest in a new product.
+        expr: REASON
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - Plan Upgrade
+          - Billing Inquiry
+          - New Product Interest
+      - name: REP_ID
+        description: Unique identifier for the sales representative who interacted with the customer.
+        expr: REP_ID
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - REP0014
+          - REP0016
+          - REP0068
+      - name: RESOLUTION
+        description: The outcome or status of a customer interaction, indicating whether the issue was resolved, requires follow-up, or was escalated to a higher level of support.
+        expr: RESOLUTION
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - Follow-up Required
+          - Resolved
+          - Escalated
+    time_dimensions:
+      - name: INTERACTION_DATE
+        description: Date and time when the customer interaction occurred.
+        expr: INTERACTION_DATE
+        data_type: TIMESTAMP_NTZ(9)
+        sample_values:
+          - 2024-07-10T06:41:11.211+0000
+          - 2025-06-03T14:58:42.684+0000
+          - 2024-05-21T00:08:42.248+0000
+    facts:
+      - name: DURATION_MINUTES
+        description: The length of time, in minutes, that a customer interacted with the company, such as a phone call or meeting, providing insight into the level of engagement and support required by each customer.
+        expr: DURATION_MINUTES
+        data_type: NUMBER(38,0)
+        access_modifier: public_access
+        sample_values:
+          - '25'
+          - '33'
+          - '42'
+      - name: SATISFACTION_SCORE
+        description: A measure of how satisfied a customer is with their interaction, on a scale of 1-5, where 1 is very dissatisfied and 5 is very satisfied.
+        expr: SATISFACTION_SCORE
+        data_type: NUMBER(38,0)
+        access_modifier: public_access
+        sample_values:
+          - '4'
+          - '2'
+          - '5'
+  - name: PRODUCTS
+    description: The PRODUCTS table stores information about the various products offered by a company, including a unique identifier, product name, category, base price, and a brief description of each product.
+    base_table:
+      database: SALES
+      schema: PROD
+      table: PRODUCTS
+    dimensions:
+      - name: CATEGORY
+        description: 'The category of the product, which can be one of the following: Service (intangible offerings), Smart Device (electronic products with advanced features), or Renewable (products related to sustainable energy sources).'
+        expr: CATEGORY
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - Service
+          - Smart Device
+          - Renewable
+      - name: DESCRIPTION
+        description: 'This column stores the type of energy service product offered, which can be one of three options: a basic standard residential service, an enhanced service with priority support, or a premium service with additional features such as green energy options and 24/7 customer support.'
+        expr: DESCRIPTION
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - Standard residential energy service
+          - Enhanced energy service with priority support
+          - Premium service with green energy options and 24/7 support
+      - name: PRODUCT_ID
+        description: Unique identifier for a product in the catalog.
+        expr: PRODUCT_ID
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - PLAN-002
+          - PLAN-003
+          - PLAN-001
+      - name: PRODUCT_NAME
+        description: The type of energy plan offered to customers, which can be Premium, Standard, or Basic, each with varying levels of features and pricing.
+        expr: PRODUCT_NAME
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - Premium Energy Plan
+          - Standard Energy Plan
+          - Basic Energy Plan
+    facts:
+      - name: BASE_PRICE
+        description: The base price of a product, representing the standard cost before any discounts or promotions are applied.
+        expr: BASE_PRICE
+        data_type: FLOAT
+        access_modifier: public_access
+        sample_values:
+          - '0'
+          - '249.99'
+          - '9.99'
+    primary_key:
+      columns:
+        - PRODUCT_ID
+  - name: SALES_REPRESENTATIVES
+    description: This table stores information about sales representatives, including their unique identifier, name, contact details, assigned territory, hire date, and commission rate, to manage and track sales performance and compensation.
+    base_table:
+      database: SALES
+      schema: PROD
+      table: SALES_REPRESENTATIVES
+    dimensions:
+      - name: EMAIL
+        description: The email addresses of the sales representatives.
+        expr: EMAIL
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - kingkathleen@lowe.info
+          - dwalker@brown.org
+          - leslie90@weiss.com
+      - name: PHONE
+        description: The phone number of the sales representative.
+        expr: PHONE
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - +1-436-842-0837x836
+          - '3902202441'
+          - +1-483-225-6459x2254
+      - name: REP_ID
+        description: Unique identifier for the sales representative who made the sale.
+        expr: REP_ID
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - REP0043
+          - REP0002
+          - REP0048
+      - name: REP_NAME
+        description: The name of the sales representative who made the sale.
+        expr: REP_NAME
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - Rachel Nolan
+          - Eric Flynn
+          - Donald Sanders
+      - name: TERRITORY
+        description: Geographic region assigned to a sales representative.
+        expr: TERRITORY
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - North
+          - Central
+          - South
+    time_dimensions:
+      - name: HIRE_DATE
+        description: Date on which the sales representative was hired by the company.
+        expr: HIRE_DATE
+        data_type: DATE
+        sample_values:
+          - '2016-11-15'
+          - '2022-12-28'
+          - '2024-05-07'
+    facts:
+      - name: COMMISSION_RATE
+        description: The percentage of sales revenue that a sales representative earns as commission for each sale they make.
+        expr: COMMISSION_RATE
+        data_type: FLOAT
+        access_modifier: public_access
+        sample_values:
+          - '0.056'
+          - '0.055'
+          - '0.037'
+    primary_key:
+      columns:
+        - REP_ID
+  - name: SMART_METER_READINGS
+    base_table:
+      database: ENERGY
+      schema: PROD
+      table: SMART_METER_READINGS
+    dimensions:
+      - name: CUSTOMER_ID
+        description: Unique identifier for the customer associated with the smart meter reading.
+        expr: CUSTOMER_ID
+        data_type: VARCHAR(134217728)
+        sample_values:
+          - CUST001410
+          - CUST001412
+          - CUST001411
+      - name: METER_ID
+        description: Unique identifier for a specific smart meter device.
+        expr: METER_ID
+        data_type: VARCHAR(134217728)
+        sample_values:
+          - '****7431'
+          - '****5790'
+          - '****2521'
+      - name: READING_STATUS
+        description: Indicates the status of the meter reading, where 'Estimated' means the reading was not obtained directly from the meter and 'Valid' means the reading was obtained directly from the meter.
+        expr: READING_STATUS
+        data_type: VARCHAR(134217728)
+        sample_values:
+          - Estimated
+          - Valid
+    time_dimensions:
+      - name: TIMESTAMP
+        description: Date and time when the smart meter reading was taken.
+        expr: TIMESTAMP
+        data_type: TIMESTAMP_LTZ(6)
+        sample_values:
+          - 2024-11-06T13:30:00.000+0000
+          - 2024-11-05T09:30:00.000+0000
+          - 2024-11-07T06:15:00.000+0000
+    facts:
+      - name: CONSUMPTION_KWH
+        description: The amount of electricity consumed by a household or business, measured in kilowatt-hours (kWh), representing the total energy usage recorded by the smart meter.
+        expr: CONSUMPTION_KWH
+        data_type: FLOAT
+        access_modifier: public_access
+        sample_values:
+          - '1'
+          - '2.5'
+          - '2'
+      - name: COST_USD
+        description: The cost in US dollars associated with a specific smart meter reading.
+        expr: COST_USD
+        data_type: FLOAT
+        access_modifier: public_access
+        sample_values:
+          - '1'
+          - '0'
+          - '0.5'
+      - name: POWER_FACTOR
+        description: The power factor is a measure of how effectively the electrical power is being used by the metered site, with values ranging from 0 (no power factor) to 1 (perfect power factor), indicating the ratio of real power (kW) to apparent power (kVA).
+        expr: POWER_FACTOR
+        data_type: FLOAT
+        access_modifier: public_access
+        sample_values:
+          - '0.9679999948'
+          - '0.97299999'
+          - '0.9070000052'
+      - name: RATE_PER_KWH
+        description: The rate at which the customer is charged per kilowatt-hour (kWh) of electricity consumed, as recorded by the smart meter.
+        expr: RATE_PER_KWH
+        data_type: FLOAT
+        access_modifier: public_access
+        sample_values:
+          - '0.1800000072'
+          - '0.2800000012'
+          - '0.1199999973'
+      - name: TEMPERATURE_CELSIUS
+        description: The temperature reading in degrees Celsius recorded by the smart meter.
+        expr: TEMPERATURE_CELSIUS
+        data_type: FLOAT
+        access_modifier: public_access
+        sample_values:
+          - '21.899999619'
+          - '27.399999619'
+          - '17.600000381'
+      - name: VOLTAGE
+        description: The voltage reading from the smart meter, measured in volts, representing the electrical potential difference between two points in the electrical circuit.
+        expr: VOLTAGE
+        data_type: FLOAT
+        access_modifier: public_access
+        sample_values:
+          - '240.320007324'
+          - '237.839996338'
+          - '241.63999939'
+  - name: TRANSACTIONS
+    description: This table stores information about individual transactions, including the transaction ID, customer and representative IDs, product details, transaction date, quantity, unit price, discount, total amount, payment method, transaction status, and channel through which the transaction was made.
+    base_table:
+      database: SALES
+      schema: PROD
+      table: TRANSACTIONS
+    dimensions:
+      - name: CHANNEL
+        description: The channel through which a transaction was initiated, indicating the source or medium used by the customer to interact with the company.
+        expr: CHANNEL
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - Phone
+          - Initial Enrollment
+          - Online
+      - name: CUSTOMER_ID
+        description: Unique identifier for the customer who made the transaction.
+        expr: CUSTOMER_ID
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - CUST001002
+          - CUST001003
+          - CUST001004
+      - name: PAYMENT_METHOD
+        description: The method used by the customer to make a payment, such as a credit card, PayPal, or Automated Clearing House (ACH) transfer.
+        expr: PAYMENT_METHOD
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - Credit Card
+          - PayPal
+          - ACH
+      - name: PRODUCT_ID
+        description: Unique identifier for the product being transacted.
+        expr: PRODUCT_ID
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - PLAN-002
+          - PLAN-003
+          - PLAN-001
+      - name: REP_ID
+        description: Unique identifier for the sales representative who made the transaction.
+        expr: REP_ID
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - REP0039
+          - REP0067
+          - REP0026
+      - name: TRANSACTION_ID
+        description: Unique identifier for each transaction.
+        expr: TRANSACTION_ID
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - TXN10002
+          - TXN10003
+          - TXN10120
+      - name: TRANSACTION_STATUS
+        description: The TRANSACTION_STATUS column indicates the current state of a transaction, with "Pending" representing a transaction that is awaiting completion or processing, and "Completed" representing a transaction that has been fully processed and finalized.
+        expr: TRANSACTION_STATUS
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - Pending
+          - Completed
+    time_dimensions:
+      - name: TRANSACTION_DATE
+        description: Date and time when the transaction took place.
+        expr: TRANSACTION_DATE
+        data_type: TIMESTAMP_NTZ(9)
+        sample_values:
+          - 2024-01-13T00:00:00.000+0000
+          - 2025-09-10T00:00:00.000+0000
+          - 2024-10-24T00:00:00.000+0000
+    facts:
+      - name: DISCOUNT_PERCENT
+        description: The percentage discount applied to a transaction, indicating the amount of reduction in the original price.
+        expr: DISCOUNT_PERCENT
+        data_type: FLOAT
+        access_modifier: public_access
+        sample_values:
+          - '0'
+          - '10'
+          - '5'
+      - name: QUANTITY
+        description: The quantity of items involved in a transaction.
+        expr: QUANTITY
+        data_type: NUMBER(38,0)
+        access_modifier: public_access
+        sample_values:
+          - '1'
+          - '2'
+      - name: TOTAL_AMOUNT
+        description: The total amount of the transaction, representing the final cost or value of the transaction, including all applicable fees, taxes, and charges.
+        expr: TOTAL_AMOUNT
+        data_type: FLOAT
+        access_modifier: public_access
+        sample_values:
+          - '0'
+          - '151.98'
+          - '8074.99'
+      - name: UNIT_PRICE
+        description: The price of a single unit of the item being transacted.
+        expr: UNIT_PRICE
+        data_type: FLOAT
+        access_modifier: public_access
+        sample_values:
+          - '0'
+          - '9.99'
+          - '79.99'
+relationships:
+  - name: CUSTOMER_INTERACT_TO_CUSTOMER
+    left_table: CUSTOMER_INTERACTIONS
+    right_table: CUSTOMERS
+    relationship_columns:
+      - left_column: CUSTOMER_ID
+        right_column: CUSTOMER_ID
+  - name: CUSTOMER_INTERACT_TO_SALES_REP
+    left_table: CUSTOMER_INTERACTIONS
+    right_table: SALES_REPRESENTATIVES
+    relationship_columns:
+      - left_column: REP_ID
+        right_column: REP_ID
+  - name: METER_TO_CUSTOMER
+    left_table: SMART_METER_READINGS
+    right_table: CUSTOMERS
+    relationship_columns:
+      - left_column: CUSTOMER_ID
+        right_column: CUSTOMER_ID
+  - name: TRANSACTION_TO_CUSTOMER
+    left_table: TRANSACTIONS
+    right_table: CUSTOMERS
+    relationship_columns:
+      - left_column: CUSTOMER_ID
+        right_column: CUSTOMER_ID
+  - name: TRANSACTION_TO_PRODUCT
+    left_table: TRANSACTIONS
+    right_table: PRODUCTS
+    relationship_columns:
+      - left_column: PRODUCT_ID
+        right_column: PRODUCT_ID
+  - name: TRANSACTION_TO_SALES
+    left_table: TRANSACTIONS
+    right_table: SALES_REPRESENTATIVES
+    relationship_columns:
+      - left_column: REP_ID
+        right_column: REP_ID

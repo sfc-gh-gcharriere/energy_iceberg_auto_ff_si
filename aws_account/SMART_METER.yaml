@@ -1,0 +1,242 @@
+name: SMART_METER
+description: Smart Meter & Customer Semantic View
+tables:
+  - name: CUSTOMERS
+    description: This table stores information about customers, including their personal details, contact information, identification, address, payment details, and service plan information, as well as their enrollment and billing cycle details, to manage customer relationships and track their interactions with the organization.
+    base_table:
+      database: ENERGY
+      schema: PROD
+      table: CUSTOMERS
+    dimensions:
+      - name: BILLING_CYCLE
+        description: The frequency at which a customer is billed for their services.
+        expr: BILLING_CYCLE
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - Monthly
+          - Quarterly
+      - name: CITY
+        description: The city where the customer is located.
+        expr: CITY
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - West Ronaldview
+          - West Deborah
+          - Lake Juliefurt
+      - name: CREDIT_CARD_NUMBER
+        description: Unique identifier of the customer's credit card.
+        expr: CREDIT_CARD_NUMBER
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - '4111161528098856'
+          - '30487282997967'
+          - '3581618495931032'
+      - name: CUSTOMER_ID
+        description: Unique identifier for each customer in the database.
+        expr: CUSTOMER_ID
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - CUST001159
+          - CUST001236
+          - CUST001002
+      - name: CUSTOMER_TYPE
+        description: The type of customer, categorized as either Commercial (businesses), Industrial (manufacturing or production facilities), or Residential (individual households).
+        expr: CUSTOMER_TYPE
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - Commercial
+          - Industrial
+          - Residential
+      - name: EMAIL
+        description: The email address of the customer.
+        expr: EMAIL
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - nancymeyer@example.net
+          - maria58@example.net
+          - jessicapayne@example.org
+      - name: FIRST_NAME
+        description: The first name of the customer.
+        expr: FIRST_NAME
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - Michele
+          - Katherine
+          - Reginald
+      - name: LAST_NAME
+        description: The customer's last name.
+        expr: LAST_NAME
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - Robinson
+          - Barton
+          - Mccoy
+      - name: PHONE
+        description: The customer's phone number, including area code, in a standardized format.
+        expr: PHONE
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - 922-669-1669
+          - 503-703-2432
+          - (555)434-1928
+      - name: SERVICE_PLAN
+        description: The type of service plan subscribed to by the customer, which determines the level of features and support they are entitled to.
+        expr: SERVICE_PLAN
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - Premium
+          - Basic
+          - Standard
+      - name: SSN
+        description: Unique identifier for each customer, typically a Social Security Number (SSN) used to distinguish and track individual customers.
+        expr: SSN
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - 518-73-1120
+          - 455-49-2025
+          - 232-71-6673
+      - name: STATE
+        description: The two-letter code representing the state or region where the customer is located.
+        expr: STATE
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - RI
+          - AS
+          - FM
+      - name: STREET_ADDRESS
+        description: The physical location of a customer's residence or place of business.
+        expr: STREET_ADDRESS
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - 49828 Jonathan Mountain Suite 746
+          - 503 Linda Locks
+          - 431 Joshua River
+      - name: ZIP_CODE
+        description: The ZIP code of the customer's mailing address.
+        expr: ZIP_CODE
+        data_type: VARCHAR(16777216)
+        sample_values:
+          - '43810'
+          - '56203'
+          - '20507'
+    time_dimensions:
+      - name: DATE_OF_BIRTH
+        description: The date of birth of the customer.
+        expr: DATE_OF_BIRTH
+        data_type: DATE
+        sample_values:
+          - '2000-10-08'
+          - '1973-03-01'
+          - '1958-04-24'
+      - name: ENROLLMENT_DATE
+        description: The date on which the customer enrolled or signed up for a service or program.
+        expr: ENROLLMENT_DATE
+        data_type: DATE
+        sample_values:
+          - '2023-09-20'
+          - '2024-09-29'
+          - '2024-02-07'
+    primary_key:
+      columns:
+        - CUSTOMER_ID
+  - name: SMART_METER_READINGS
+    description: This table stores energy consumption readings from smart meters, providing detailed information about each meter's usage, including consumption in kilowatt-hours, voltage, power factor, and cost in US dollars, along with the timestamp of the reading and the status of the reading.
+    base_table:
+      database: ENERGY
+      schema: PROD
+      table: SMART_METER_READINGS
+    dimensions:
+      - name: CUSTOMER_ID
+        description: Unique identifier for the customer associated with the smart meter reading.
+        expr: CUSTOMER_ID
+        data_type: VARCHAR(134217728)
+        sample_values:
+          - CUST001539
+          - CUST001778
+          - CUST001003
+      - name: METER_ID
+        description: Unique identifier for the smart meter that recorded the energy consumption reading.
+        expr: METER_ID
+        data_type: VARCHAR(134217728)
+        sample_values:
+          - MTR278888
+          - MTR618315
+          - MTR581625
+      - name: READING_STATUS
+        description: Indicates whether the meter reading is based on an actual measurement (Valid) or an estimated value (Estimated).
+        expr: READING_STATUS
+        data_type: VARCHAR(134217728)
+        sample_values:
+          - Valid
+          - Estimated
+    time_dimensions:
+      - name: TIMESTAMP
+        description: The date and time when the smart meter reading was recorded, in ISO 8601 format, including the time zone offset.
+        expr: TIMESTAMP
+        data_type: TIMESTAMP_LTZ(6)
+        sample_values:
+          - 2024-11-06T13:30:00.000+0000
+          - 2024-08-16T13:00:00.000+0000
+          - 2024-11-06T16:15:00.000+0000
+    facts:
+      - name: CONSUMPTION_KWH
+        description: The amount of electricity consumed by a household or business, measured in kilowatt-hours (kWh), as recorded by a smart meter.
+        expr: CONSUMPTION_KWH
+        data_type: FLOAT
+        access_modifier: public_access
+        sample_values:
+          - '0.5310000181'
+          - '1.378000021'
+          - '1.297000051'
+      - name: COST_USD
+        description: The cost of electricity consumption in US dollars.
+        expr: COST_USD
+        data_type: FLOAT
+        access_modifier: public_access
+        sample_values:
+          - '0.4300000072'
+          - '0.4199999869'
+          - '0.349999994'
+      - name: POWER_FACTOR
+        description: The power factor is a measure of how effectively the electrical power is being used by the metered site, with values ranging from 0 (no power factor) to 1 (perfect power factor), indicating the ratio of real power (kW) to apparent power (kVA).
+        expr: POWER_FACTOR
+        data_type: FLOAT
+        access_modifier: public_access
+        sample_values:
+          - '0.9350000024'
+          - '0.94599998'
+          - '0.92900002'
+      - name: RATE_PER_KWH
+        description: The rate at which the customer is charged per kilowatt-hour (kWh) of electricity consumed, as recorded by the smart meter.
+        expr: RATE_PER_KWH
+        data_type: FLOAT
+        access_modifier: public_access
+        sample_values:
+          - '0.1199999973'
+          - '0.1800000072'
+          - '0.2800000012'
+      - name: TEMPERATURE_CELSIUS
+        description: The temperature reading in degrees Celsius recorded by the smart meter at the time of the reading.
+        expr: TEMPERATURE_CELSIUS
+        data_type: FLOAT
+        access_modifier: public_access
+        sample_values:
+          - '23.899999619'
+          - '27.399999619'
+          - '17.600000381'
+      - name: VOLTAGE
+        description: The voltage reading from the smart meter, measured in volts, representing the electrical potential difference between two points in the electrical circuit.
+        expr: VOLTAGE
+        data_type: FLOAT
+        access_modifier: public_access
+        sample_values:
+          - '238.570007324'
+          - '238.699996948'
+          - '240.179992676'
+relationships:
+  - name: METER_TO_CUSTOMER
+    left_table: SMART_METER_READINGS
+    right_table: CUSTOMERS
+    relationship_columns:
+      - left_column: CUSTOMER_ID
+        right_column: CUSTOMER_ID
